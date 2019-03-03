@@ -1,0 +1,5 @@
+vendor
+.vscode
+routers/commentsRouter_controllers.go
+lastupdate.tmp
+WechatReport

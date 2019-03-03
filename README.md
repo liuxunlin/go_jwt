@@ -1,0 +1,1 @@
+beego for wechat.
