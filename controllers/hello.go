@@ -4,6 +4,10 @@ import (
 	"github.com/astaxie/beego"
 )
 
+func (c *HelloController) URLMapping() {
+	c.Mapping("Get", c.Get)
+}
+
 // HelloController operations for Hello
 type HelloController struct {
 	beego.Controller
@@ -13,8 +17,13 @@ type HelloController struct {
 // @Description get Hello
 // @Success 200 {object} models.Hello
 // @Failure 403
-// @router /hello [get]
+// @router /:name [get]
 func (c *HelloController) Get() {
-	c.Data["json"] = "Hello hello!!!"
+	name := c.GetString(":name")
+	if name != "" {
+		c.Data["json"] = "Hello，" + name
+	} else {
+		c.Data["json"] = "Hello Gender"
+	}
 	c.ServeJSON()
 }
