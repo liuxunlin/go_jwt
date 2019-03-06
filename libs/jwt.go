@@ -1,70 +1,55 @@
 package libs
 
 import (
-	"errors"
+	"crypto/md5"
+	"io"
 	"log"
+	"strconv"
+	"time"
 
 	"github.com/astaxie/beego"
 
 	"github.com/dgrijalva/jwt-go"
 )
 
-type JwtToken struct {
-	Username string
-	Uid      int64
-	Expires  int64
-}
+func init() {}
 
-var (
-	verifyKey  string
-	ErrAbsent  = "token absent"  // 令牌不存在
-	ErrInvalid = "token invalid" // 令牌无效
-	ErrExpired = "token expired" // 令牌过期
-	ErrOther   = "other error"   // 其他错误
-)
-
-func init() {
-	verifyKey = beego.AppConfig.String("jwt::token")
-
-}
-
-func (j JwtToken) GetToken() (string, error) {
-	claims := &jwt.StandardClaims{
-		ExpiresAt: j.Expires, //time.Unix(c.ExpiresAt, 0)
-		Issuer:    j.Username,
-	}
-	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
-	tokenString, err := token.SignedString([]byte(verifyKey))
+// iss: jwt签发者
+// sub: jwt所面向的用户
+// aud: 接收jwt的一方
+// exp: jwt的过期时间，这个过期时间必须要大于签发时间
+// nbf: 定义在什么时间之前，该jwt都是不可用的.
+// iat: jwt的签发时间
+// jti: jwt的唯一身份标识，主要用来作为一次性token,从而回避重放攻击。
+func GenerateToken(userId int, domain string) string {
+	var tokenExpire int64
+	// current timestamp
+	currentTimestamp := time.Now().UTC().Unix()
+	tokenExpire, err := beego.AppConfig.Int64("jwt::token_expire")
 	if err != nil {
-		log.Println(err)
+		tokenExpire = 3600
 	}
-	return tokenString, err
-}
-
-func (j JwtToken) ValidateToken(tokenString string) (bool, error) {
-	if tokenString == "" {
-		return false, errors.New(ErrAbsent)
-	}
-
-	token, err := jwt.Parse(tokenString, func(token *jwt.Token) (interface{}, error) {
-		return []byte(verifyKey), nil
+	// md5 of sub & iat
+	h := md5.New()
+	io.WriteString(h, strconv.Itoa(userId))
+	io.WriteString(h, strconv.FormatInt(int64(currentTimestamp), 10))
+	// Create a new token object, specifying signing method and the claims
+	// you would like it to contain.
+	token := jwt.NewWithClaims(jwt.SigningMethodHS256, jwt.MapClaims{
+		"sub": userId,
+		"iat": currentTimestamp,
+		"exp": currentTimestamp + tokenExpire,
+		"nbf": currentTimestamp,
+		"iss": domain,
+		"jti": h.Sum(nil),
 	})
 
-	if token == nil {
-		return false, errors.New(ErrInvalid)
+	// Sign and get the complete encoded token as a string using the secret
+	tokenString, err := token.SignedString([]byte(beego.AppConfig.String("jwt::token")))
+
+	if err != nil {
+		log.Fatal(err)
 	}
 
-	if token.Valid {
-		return true, nil
-	} else if ve, ok := err.(*jwt.ValidationError); ok {
-		if ve.Errors&jwt.ValidationErrorMalformed != 0 {
-			return false, errors.New(ErrInvalid)
-		} else if ve.Errors&(jwt.ValidationErrorExpired|jwt.ValidationErrorNotValidYet) != 0 {
-			return false, errors.New(ErrExpired)
-		} else {
-			return false, errors.New(ErrOther)
-		}
-	} else {
-		return false, errors.New(ErrOther)
-	}
+	return (tokenString)
 }

@@ -9,6 +9,7 @@ package routers
 
 import (
 	"go_wechat/controllers"
+	"go_wechat/handlers"
 
 	"github.com/astaxie/beego"
 	"github.com/astaxie/beego/plugins/cors"
@@ -34,6 +35,7 @@ func init() {
 
 	ns := beego.NewNamespace("/v1",
 		beego.NSNamespace("/user",
+			beego.NSBefore(handlers.ValidateToken),
 			beego.NSInclude(
 				&controllers.UserController{},
 			),

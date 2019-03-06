@@ -1,0 +1,38 @@
+
+    
+version: '3.1'
+
+services:
+
+  baseapp:
+    build:
+      context: ./docker/app
+      dockerfile: Dockerfile
+    networks:
+      - local
+    tty: true
+    volumes:
+      - "./src/app:/var/www/go-app/src/app"
+    working_dir: /var/www/go-app/src/app
+    ports:
+      - 80:8080
+
+  db:
+    image: mysql
+    restart: always
+    command: --default-authentication-plugin=mysql_native_password
+    environment:
+      MYSQL_USER: root
+      MYSQL_DATABASE: test
+      MYSQL_PASSWORD: pang123
+      MYSQL_ROOT_PASSWORD: pang123
+    volumes:
+      - ./docker/mysql:/var/lib/mysql
+      - "/tmp:/tmp"
+    networks:
+      - local
+    ports:
+      - 13306:3306
+      
+networks:
+  local:

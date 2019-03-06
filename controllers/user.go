@@ -19,7 +19,7 @@ func (u *UserController) URLMapping() {
 	u.Mapping("Get", u.Get)
 	u.Mapping("Post", u.Post)
 	u.Mapping("Redis", u.Redis)
-	u.Mapping("Logout", u.Logout)
+	u.Mapping("Login", u.Login)
 }
 
 // @router /:uid [get]
@@ -101,11 +101,14 @@ func (u *UserController) Redis() {
 	u.ServeJSON()
 }
 
-// @Title logout
+// @Title login
 // @Description Logs out current logged in user session
-// @Success 200 {string} logout success
-// @router /logout [get]
-func (u *UserController) Logout() {
-	u.Data["json"] = OutResponse(200, nil, "")
+// @Success 200 {string} login success
+// @router /login [post]
+func (u *UserController) Login() {
+	userId, _ := u.GetInt("id")
+
+	token := libs.GenerateToken(userId, u.Ctx.Input.Domain())
+	u.Data["json"] = OutResponse(200, map[string]string{"token": token}, "")
 	u.ServeJSON()
 }

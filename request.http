@@ -8,3 +8,14 @@ Content-Type: application/x-www-form-urlencoded
 Name=foo
 &Age=22
 &Email=foo@test.com
+
+### jwt test
+GET http://127.0.0.1:8080/v1/user/login
+content-type: application/json
+
+{
+    "id":1,
+    "name": "pang",
+    "email": "pang@test.com",
+    "age":21
+}
