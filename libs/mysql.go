@@ -1,7 +1,6 @@
 package libs
 
 import (
-	"fmt"
 	"os"
 
 	"github.com/astaxie/beego"
@@ -25,11 +24,11 @@ func Init() {
 		return
 	}
 	//orm.RegisterModel(new(models.User))   //注册model实体
-	err = orm.RunSyncdb("default", false, true) //自动同步表结构
-	if err != nil {
-		fmt.Println("自动建表失败：", err)
-	}
-	orm.RunCommand()
+	// err = orm.RunSyncdb("default", false, true) //自动同步表结构
+	// if err != nil {
+	// 	fmt.Println("自动建表失败：", err)
+	// }
+	// orm.RunCommand()
 }
 
 //返回带前缀的表名
