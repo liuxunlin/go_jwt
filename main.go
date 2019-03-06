@@ -17,11 +17,6 @@ import (
 
 func init() {
 	libs.Init()
-	corsHandler := func(ctx *context.Context) {
-		ctx.Output.Header("Access-Control-Allow-Origin", ctx.Input.Domain())
-		ctx.Output.Header("Access-Control-Allow-Methods", "*")
-	}
-	beego.InsertFilter("*", beego.BeforeRouter, corsHandler)
 	beego.BConfig.WebConfig.Session.SessionOn = true
 }
 

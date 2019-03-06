@@ -19,17 +19,17 @@ type UserController struct {
 func (u *UserController) Get() {
 	userId, _ := u.GetInt(":uid")
 	if userId == 0 {
-		u.Data["json"] = &Response{404, "no user exists.", nil}
+		u.Data["json"] = Response{404, "no user exists.", nil}
 		u.ServeJSON()
 		return
 	} else {
 		res, err := models.GetUserById(userId)
 		if err != nil {
-			u.Data["json"] = &Response{400, "failed", nil}
+			u.Data["json"] = Response{400, "failed", nil}
 			u.ServeJSON()
 			return
 		}
-		u.Data["json"] = &Response{200, "success", &res}
+		u.Data["json"] = Response{200, "success", &res}
 		u.ServeJSON()
 		return
 	}
@@ -47,11 +47,11 @@ func (u *UserController) Post() {
 	newId, err := models.AddUser(&NewUser)
 
 	if err != nil {
-		u.Data["json"] = &Response{400, "failed", nil}
+		u.Data["json"] = Response{400, "failed", nil}
 		u.ServeJSON()
 		return
 	}
-	u.Data["json"] = &Response{200, "success", newId}
+	u.Data["json"] = Response{200, "success", newId}
 	u.ServeJSON()
 	return
 }
@@ -69,7 +69,7 @@ func (u *UserController) Redis() {
 		if err != nil {
 			fmt.Println(err)
 		}
-		u.Data["json"] = &Response{200, "success", &user}
+		u.Data["json"] = Response{200, "success", &user}
 		u.ServeJSON()
 		return
 	} else {
@@ -77,12 +77,12 @@ func (u *UserController) Redis() {
 		if err != nil {
 			fmt.Println(err)
 		}
-		u.Data["json"] = &Response{200, "success", &user}
+		u.Data["json"] = Response{200, "success", &user}
 		u.ServeJSON()
 		return
 
 	}
-	u.Data["json"] = &Response{200, "success", &user}
+	u.Data["json"] = Response{200, "success", &user}
 	u.ServeJSON()
 }
 
@@ -91,6 +91,6 @@ func (u *UserController) Redis() {
 // @Success 200 {string} logout success
 // @router /logout [get]
 func (u *UserController) Logout() {
-	u.Data["json"] = &Response{200, "logout success.", nil}
+	u.Data["json"] = Response{200, "logout success.", nil}
 	u.ServeJSON()
 }
