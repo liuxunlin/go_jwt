@@ -25,7 +25,6 @@ func (u *UserController) URLMapping() {
 // @router /:uid [get]
 func (u *UserController) Get() {
 	//u.Ctx.ResponseWriter.Header().Set("Access-Control-Allow-Origin", u.Ctx.Request.Header.Get("Origin"))
-	fmt.Println("Header Origin: ", u.Ctx.Request.Header.Get("Origin"))
 	userId, _ := u.GetInt(":uid")
 	if userId == 0 {
 		u.Data["json"] = OutResponse(404, nil, "no user exists.")

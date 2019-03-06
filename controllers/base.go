@@ -1,6 +1,7 @@
 package controllers
 
 import (
+	_const "go_wechat/const"
 	"time"
 
 	"github.com/astaxie/beego"
@@ -22,6 +23,9 @@ type Response struct {
 }
 
 func OutResponse(code int, data interface{}, msg string) Response {
+	if msg == "" {
+		msg = _const.StatusText(code)
+	}
 	resp := Response{
 		Code:      code,
 		Msg:       msg,
