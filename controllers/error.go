@@ -8,14 +8,16 @@ type ErrorController struct {
 }
 
 func (c *ErrorController) Error404() {
-	c.Data["json"] = OutResponse(404, nil, "Not Found")
+	c.Data["json"] = OutResponse(404, nil, "METHOD NOT FOUND")
 	c.ServeJSON()
 }
+
 func (c *ErrorController) Error401() {
-	c.Data["json"] = OutResponse(401, nil, "Permission denied")
+	c.Data["json"] = OutResponse(401, nil, "PERMISSION DENIEND")
 	c.ServeJSON()
 }
+
 func (c *ErrorController) Error403() {
-	c.Data["json"] = OutResponse(403, nil, "Forbidden")
+	c.Data["json"] = OutResponse(403, nil, "FORBBIDEN")
 	c.ServeJSON()
 }

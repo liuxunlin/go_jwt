@@ -32,6 +32,7 @@ func Md5(str string) string {
 	init.Write([]byte(str))
 	return fmt.Sprintf("%x", init.Sum(nil))
 }
+
 func Sha256(s string) string {
 	h := sha256.New()
 	h.Write([]byte(s))
@@ -89,7 +90,6 @@ func randString(n int, LetterBytes string) string {
 		cache >>= letterIdxBits
 		remain--
 	}
-
 	return string(b)
 }
 
@@ -117,7 +117,7 @@ func GetLocalIp() string {
 	addrSlice, err := net.InterfaceAddrs()
 	if err != nil {
 		fmt.Println("Get local IP addr failed!")
-		return "localhost"
+		return "127.0.0.1"
 	}
 	for _, addr := range addrSlice {
 		if ipnet, ok := addr.(*net.IPNet); ok && !ipnet.IP.IsLoopback() {
@@ -126,5 +126,5 @@ func GetLocalIp() string {
 			}
 		}
 	}
-	return "localhost"
+	return "127.0.0.1"
 }

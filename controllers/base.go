@@ -1,7 +1,7 @@
 package controllers
 
 import (
-	_const "go_wechat/const"
+	. "go_wechat/libs"
 	"time"
 
 	"github.com/astaxie/beego"
@@ -24,20 +24,22 @@ type Response struct {
 
 func OutResponse(code int, data interface{}, msg string) Response {
 	if msg == "" {
-		msg = _const.StatusText(code)
+		msg = GetMsg(code)
 	}
-	resp := Response{
+	Resp := Response{
 		Code:      code,
 		Msg:       msg,
 		Data:      data,
 		TimeStamp: time.Now().Unix(), //time.Now().Format("2006-01-02 15:04:05")
 	}
-	return resp
+	return Resp
 }
 
 func (m *MainController) Welcome() {
-	m.Data["Website"] = "www.unclepang.com"
-	m.Data["Email"] = "10846295@qq.com"
-	m.TplName = "index.tpl"
-	m.Render()
+	// m.Data["Website"] = "www.unclepang.com"
+	// m.Data["Email"] = "10846295@qq.com"
+	// m.TplName = "index.tpl"
+	// m.Render()
+	m.Data["json"] = OutResponse(1, nil, "")
+	m.ServeJSON()
 }
