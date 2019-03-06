@@ -15,21 +15,31 @@ type UserController struct {
 	beego.Controller
 }
 
+func (u *UserController) URLMapping() {
+	u.Mapping("Get", u.Get)
+	u.Mapping("Post", u.Post)
+	u.Mapping("Redis", u.Redis)
+	u.Mapping("Logout", u.Logout)
+}
+
 // @router /:uid [get]
 func (u *UserController) Get() {
+	//u.Ctx.ResponseWriter.Header().Set("Access-Control-Allow-Origin", u.Ctx.Request.Header.Get("Origin"))
+	fmt.Println("Header Origin: ", u.Ctx.Request.Header.Get("Origin"))
 	userId, _ := u.GetInt(":uid")
 	if userId == 0 {
-		u.Data["json"] = Response{404, "no user exists.", nil}
+		u.Data["json"] = OutResponse(404, nil, "no user exists.")
 		u.ServeJSON()
 		return
 	} else {
 		res, err := models.GetUserById(userId)
 		if err != nil {
-			u.Data["json"] = Response{400, "failed", nil}
+			u.Data["json"] = OutResponse(400, nil, "failed")
 			u.ServeJSON()
 			return
 		}
-		u.Data["json"] = Response{200, "success", &res}
+		//u.Ctx.Output.SetStatus(400)
+		u.Data["json"] = OutResponse(200, res, "success")
 		u.ServeJSON()
 		return
 	}
@@ -47,11 +57,11 @@ func (u *UserController) Post() {
 	newId, err := models.AddUser(&NewUser)
 
 	if err != nil {
-		u.Data["json"] = Response{400, "failed", nil}
+		u.Data["json"] = OutResponse(400, nil, "failed")
 		u.ServeJSON()
 		return
 	}
-	u.Data["json"] = Response{200, "success", newId}
+	u.Data["json"] = OutResponse(200, newId, "success")
 	u.ServeJSON()
 	return
 }
@@ -69,7 +79,7 @@ func (u *UserController) Redis() {
 		if err != nil {
 			fmt.Println(err)
 		}
-		u.Data["json"] = Response{200, "success", &user}
+		u.Data["json"] = OutResponse(200, &user, "success")
 		u.ServeJSON()
 		return
 	} else {
@@ -77,12 +87,12 @@ func (u *UserController) Redis() {
 		if err != nil {
 			fmt.Println(err)
 		}
-		u.Data["json"] = Response{200, "success", &user}
+		u.Data["json"] = OutResponse(200, &user, "success")
 		u.ServeJSON()
 		return
 
 	}
-	u.Data["json"] = Response{200, "success", &user}
+	u.Data["json"] = OutResponse(200, &user, "success")
 	u.ServeJSON()
 }
 
@@ -91,6 +101,6 @@ func (u *UserController) Redis() {
 // @Success 200 {string} logout success
 // @router /logout [get]
 func (u *UserController) Logout() {
-	u.Data["json"] = Response{200, "logout success.", nil}
+	u.Data["json"] = OutResponse(200, nil, "logout success.")
 	u.ServeJSON()
 }

@@ -1,1 +1,10 @@
+### 获取用户信息
 GET http://127.0.0.1:8080/v1/user/1
+
+###  新增用户
+POST http://127.0.0.1:8080/v1/user/create
+Content-Type: application/x-www-form-urlencoded
+
+Name=foo
+&Age=22
+&Email=foo@test.com

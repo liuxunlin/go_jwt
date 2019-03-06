@@ -7,6 +7,7 @@ import (
 	"encoding/base64"
 	"fmt"
 	"math/rand"
+	"net"
 	"strconv"
 	"strings"
 	"time"
@@ -109,4 +110,21 @@ var Rander = rand.New(src)
 func RandInt(min int, max int) int {
 	num := Rander.Intn((max - min)) + min
 	return num
+}
+
+// 获取服务器IP
+func GetLocalIp() string {
+	addrSlice, err := net.InterfaceAddrs()
+	if err != nil {
+		fmt.Println("Get local IP addr failed!")
+		return "localhost"
+	}
+	for _, addr := range addrSlice {
+		if ipnet, ok := addr.(*net.IPNet); ok && !ipnet.IP.IsLoopback() {
+			if nil != ipnet.IP.To4() {
+				return ipnet.IP.String()
+			}
+		}
+	}
+	return "localhost"
 }

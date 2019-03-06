@@ -1,0 +1,22 @@
+Redis init on port  127.0.0.1:16379
+2019/03/06 14:24:54.779 [1;34m[I] [parser.go:112]  generate router from comments[0m
+2019/03/06 14:24:54.794 [1;34m[I] [asm_amd64.s:1333]  http server Running on http://127.0.0.1:8080[0m
+Header Origin:  
+[ORM]2019/03/06 14:24:59  -[Queries/default] - [  OK / db.QueryRow /     2.3ms] - [SELECT `id`, `name`, `email`, `age`, `created_at`, `updated_at` FROM `user` WHERE `id` = ? ] - `2`
+2019/03/06 14:24:59.751 [1;44m[D] [server.go:2741]  |      127.0.0.1|[43m 400 [0m|   4.684449ms|   match|[44m GET     [0m /v1/user/2   r:/v1/user/:uid[0m
+Header Origin:  
+[ORM]2019/03/06 14:25:00  -[Queries/default] - [  OK / db.QueryRow /     2.9ms] - [SELECT `id`, `name`, `email`, `age`, `created_at`, `updated_at` FROM `user` WHERE `id` = ? ] - `2`
+2019/03/06 14:25:00.523 [1;44m[D] [server.go:2741]  |      127.0.0.1|[43m 400 [0m|   3.371385ms|   match|[44m GET     [0m /v1/user/2   r:/v1/user/:uid[0m
+Header Origin:  
+[ORM]2019/03/06 14:25:00  -[Queries/default] - [  OK / db.QueryRow /     2.5ms] - [SELECT `id`, `name`, `email`, `age`, `created_at`, `updated_at` FROM `user` WHERE `id` = ? ] - `2`
+2019/03/06 14:25:00.780 [1;44m[D] [server.go:2741]  |      127.0.0.1|[43m 400 [0m|   2.816378ms|   match|[44m GET     [0m /v1/user/2   r:/v1/user/:uid[0m
+Header Origin:  
+[ORM]2019/03/06 14:25:00  -[Queries/default] - [  OK / db.QueryRow /     2.0ms] - [SELECT `id`, `name`, `email`, `age`, `created_at`, `updated_at` FROM `user` WHERE `id` = ? ] - `2`
+2019/03/06 14:25:00.975 [1;44m[D] [server.go:2741]  |      127.0.0.1|[43m 400 [0m|   2.525821ms|   match|[44m GET     [0m /v1/user/2   r:/v1/user/:uid[0m
+[ORM]2019/03/06 14:25:02  -[Queries/default] - [  OK / db.QueryRow /     2.2ms] - [SELECT `id`, `name`, `email`, `age`, `created_at`, `updated_at` FROM `user` WHERE `id` = ? ] - `1`
+2019/03/06 14:25:02.216 [1;44m[D] [server.go:2741]  |      127.0.0.1|[42m 200 [0m|   7.448367ms|   match|[44m GET     [0m /v1/user/redis/test   r:/v1/user/redis/:redisKey[0m
+[ORM]2019/03/06 14:25:04  -[Queries/default] - [  OK / db.QueryRow /     2.3ms] - [SELECT `id`, `name`, `email`, `age`, `created_at`, `updated_at` FROM `user` WHERE `id` = ? ] - `1`
+2019/03/06 14:25:04.102 [1;44m[D] [server.go:2741]  |      127.0.0.1|[42m 200 [0m|    4.67329ms|   match|[44m GET     [0m /v1/user/redis/test   r:/v1/user/redis/:redisKey[0m
+Header Origin:  
+[ORM]2019/03/06 14:25:07  -[Queries/default] - [  OK / db.QueryRow /     2.9ms] - [SELECT `id`, `name`, `email`, `age`, `created_at`, `updated_at` FROM `user` WHERE `id` = ? ] - `2`
+2019/03/06 14:25:07.905 [1;44m[D] [server.go:2741]  |      127.0.0.1|[43m 400 [0m|   4.193023ms|   match|[44m GET     [0m /v1/user/2   r:/v1/user/:uid[0m

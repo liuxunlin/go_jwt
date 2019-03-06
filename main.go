@@ -8,8 +8,6 @@ import (
 	"runtime"
 	"time"
 
-	"github.com/astaxie/beego/context"
-
 	"github.com/astaxie/beego"
 	"github.com/astaxie/beego/orm"
 	_ "github.com/go-sql-driver/mysql"
