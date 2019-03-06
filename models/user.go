@@ -28,7 +28,7 @@ func init() {
 func GetUserById(id int) (u *User, err error) {
 	o := orm.NewOrm()
 	u = &User{Id: id}
-	if err = o.Read(u); err == nil {
+	if err = o.Read(u, "Id", "Name", "Email", "Age"); err == nil {
 		return u, nil
 	}
 	return nil, err
