@@ -3,7 +3,7 @@ package handlers
 import (
 	"encoding/json"
 	"fmt"
-	"go_wechat/controllers"
+	"go_jwt/controllers"
 
 	"github.com/astaxie/beego"
 	"github.com/astaxie/beego/context"

@@ -1,7 +1,7 @@
 package models
 
 import (
-	"go_wechat/libs"
+	"go_jwt/libs"
 
 	"github.com/astaxie/beego/orm"
 )
@@ -27,6 +27,7 @@ func init() {
 // Id doesn't exist
 func GetUserById(id int) (u *User, err error) {
 	o := orm.NewOrm()
+	//o.Using("default2") // 默认使用 default，你可以指定为其他数据库
 	u = &User{Id: id}
 	if err = o.Read(u, "Id", "Name", "Email", "Age"); err == nil {
 		return u, nil

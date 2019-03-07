@@ -8,8 +8,8 @@
 package routers
 
 import (
-	"go_wechat/controllers"
-	"go_wechat/handlers"
+	"go_jwt/controllers"
+	"go_jwt/handlers"
 
 	"github.com/astaxie/beego"
 	"github.com/astaxie/beego/plugins/cors"

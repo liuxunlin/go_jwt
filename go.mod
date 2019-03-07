@@ -1,4 +1,4 @@
-module go_wechat
+module go_jwt
 
 require (
 	github.com/astaxie/beego v1.11.1

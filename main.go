@@ -2,9 +2,9 @@ package main
 
 import (
 	"fmt"
-	"go_wechat/controllers"
-	"go_wechat/libs"
-	_ "go_wechat/routers"
+	"go_jwt/controllers"
+	"go_jwt/libs"
+	_ "go_jwt/routers"
 	"runtime"
 	"time"
 

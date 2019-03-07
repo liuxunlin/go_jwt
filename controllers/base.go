@@ -1,7 +1,7 @@
 package controllers
 
 import (
-	. "go_wechat/libs"
+	. "go_jwt/libs"
 	"time"
 
 	"github.com/astaxie/beego"

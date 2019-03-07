@@ -3,8 +3,8 @@ package controllers
 import (
 	"encoding/json"
 	"fmt"
-	"go_wechat/libs"
-	"go_wechat/models"
+	"go_jwt/libs"
+	"go_jwt/models"
 	"time"
 
 	"github.com/astaxie/beego"
