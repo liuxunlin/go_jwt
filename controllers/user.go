@@ -8,6 +8,7 @@ import (
 	"time"
 
 	"github.com/astaxie/beego"
+	"github.com/dgrijalva/jwt-go"
 )
 
 // Operations about Users
@@ -20,6 +21,7 @@ func (u *UserController) URLMapping() {
 	u.Mapping("Post", u.Post)
 	u.Mapping("Redis", u.Redis)
 	u.Mapping("Login", u.Login)
+	u.Mapping("ParseJwt", u.ParseJwt)
 }
 
 // @router /:uid [get]
@@ -110,5 +112,23 @@ func (u *UserController) Login() {
 
 	token := libs.GenerateToken(userId, u.Ctx.Input.Domain())
 	u.Data["json"] = OutResponse(200, map[string]string{"token": token}, "")
+	u.ServeJSON()
+}
+
+// @Title parseJwt
+// @Description Logs out current logged in user session
+// @Success 200 {string} login success
+// @router /parse_jwt [get]
+func (u *UserController) ParseJwt() {
+	tokenString := u.Ctx.Input.Header("Authorization")
+	token, err := jwt.Parse(tokenString, func(token *jwt.Token) (interface{}, error) {
+		if _, ok := token.Method.(*jwt.SigningMethodHMAC); !ok {
+			return nil, fmt.Errorf("Unexpected signing method: %v", token.Header["alg"])
+		}
+		return []byte(beego.AppConfig.String("jwt::token")), nil
+	})
+	fmt.Println(err)
+	userId := libs.GetIdFromClaims("user_id", token.Claims)
+	u.Data["json"] = OutResponse(200, userId, "")
 	u.ServeJSON()
 }

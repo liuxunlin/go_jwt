@@ -22,7 +22,7 @@ func ValidateToken(ctx *context.Context) {
 
 	if ctx.Input.Header("Authorization") == "" {
 		ctx.Output.SetStatus(401)
-		resBody, err := json.Marshal(controllers.OutResponse(401, nil, "token不存在"))
+		resBody, err := json.Marshal(controllers.OutResponse(401, nil, "非法请求,token不合法"))
 		ctx.Output.Body(resBody)
 		if err != nil {
 			panic(err)
@@ -65,7 +65,7 @@ func ValidateToken(ctx *context.Context) {
 			}
 		default:
 			ctx.Output.SetStatus(401)
-			resBytes, err := json.Marshal(controllers.OutResponse(401, nil, "非法token"))
+			resBytes, err := json.Marshal(controllers.OutResponse(401, nil, "token不合法"))
 			ctx.Output.Body(resBytes)
 			if err != nil {
 				panic(err)

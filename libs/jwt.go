@@ -2,8 +2,10 @@ package libs
 
 import (
 	"crypto/md5"
+	"fmt"
 	"io"
 	"log"
+	"reflect"
 	"strconv"
 	"time"
 
@@ -27,7 +29,7 @@ func GenerateToken(userId int, domain string) string {
 	currentTimestamp := time.Now().UTC().Unix()
 	tokenExpire, err := beego.AppConfig.Int64("jwt::token_expire")
 	if err != nil {
-		tokenExpire = 3600
+		tokenExpire = 600
 	}
 	// md5 of sub & iat
 	h := md5.New()
@@ -42,6 +44,7 @@ func GenerateToken(userId int, domain string) string {
 		"nbf": currentTimestamp,
 		"iss": domain,
 		"jti": h.Sum(nil),
+		"user_id":userId,
 	})
 
 	// Sign and get the complete encoded token as a string using the secret
@@ -52,4 +55,19 @@ func GenerateToken(userId int, domain string) string {
 	}
 
 	return (tokenString)
+}
+
+// (获得payload的信息)从token对象里获得参数(key)对应的值
+func GetIdFromClaims(key string, claims jwt.Claims) string {
+	v := reflect.ValueOf(claims)
+	if v.Kind() == reflect.Map {
+		for _, k := range v.MapKeys() {
+			value := v.MapIndex(k)
+
+			if fmt.Sprintf("%s", k.Interface()) == key {
+				return fmt.Sprintf("%v", value.Interface())
+			}
+		}
+	}
+	return ""
 }

@@ -29,7 +29,7 @@ func GetUserById(id int) (u *User, err error) {
 	o := orm.NewOrm()
 	//o.Using("default2") // 默认使用 default，你可以指定为其他数据库
 	u = &User{Id: id}
-	if err = o.Read(u, "Id", "Name", "Email", "Age"); err == nil {
+	if err = o.Read(u); err == nil {
 		return u, nil
 	}
 	return nil, err

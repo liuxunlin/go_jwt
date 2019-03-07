@@ -1,7 +1,6 @@
 package libs
 
 import (
-	"fmt"
 	"time"
 
 	"github.com/astaxie/beego"
@@ -41,7 +40,7 @@ func init() {
 			return err
 		},
 	}
-	fmt.Println("Redis init on port ", beego.AppConfig.String("redis_addr"))
+	//fmt.Println("Redis init on port ", beego.AppConfig.String("redis_addr"))
 }
 
 // get

@@ -15,10 +15,10 @@ import (
 
 func init() {
 	libs.Init()
-	//beego.BConfig.WebConfig.Session.SessionOn = true
 }
 
 func main() {
+
 	//指定使用多核，核心数为CPU的实际核心数量
 	runtime.GOMAXPROCS(runtime.NumCPU())
 	if beego.BConfig.RunMode == "dev" {
