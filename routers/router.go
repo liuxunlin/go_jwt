@@ -32,7 +32,9 @@ func init() {
 	}))
 
 	beego.Router("/", &controllers.MainController{}, "*:Welcome")
-	beego.Router("/ws", &controllers.WesocketController{}, "get:ws")
+
+	// 应答客户端告知升级连接为websocket
+	beego.Router("/ws", &controllers.WebsocketController{}, "get:WsHandler")
 
 	ns := beego.NewNamespace("/v1",
 		beego.NSNamespace("/user",
