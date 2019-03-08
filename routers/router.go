@@ -9,7 +9,7 @@ package routers
 
 import (
 	"go_jwt/controllers"
-	"go_jwt/handlers"
+	"go_jwt/middlewares"
 
 	"github.com/astaxie/beego"
 	"github.com/astaxie/beego/plugins/cors"
@@ -35,7 +35,7 @@ func init() {
 
 	ns := beego.NewNamespace("/v1",
 		beego.NSNamespace("/user",
-			beego.NSBefore(handlers.ValidateToken),
+			beego.NSBefore(middlewares.ValidateToken),
 			beego.NSInclude(
 				&controllers.UserController{},
 			),
