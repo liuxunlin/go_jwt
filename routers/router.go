@@ -33,6 +33,10 @@ func init() {
 
 	beego.Router("/", &controllers.MainController{}, "*:Welcome")
 
+	beego.Router("/wx_callback", &controllers.WechatController{}, "*:WxCallbackHandler")
+	beego.Router("/get_userinfo", &controllers.WechatController{}, "post:GetUserInfo")
+	beego.Router("/get_sign", &controllers.WechatController{}, "get:GetSign")
+
 	// 应答客户端告知升级连接为websocket
 	beego.Router("/ws", &controllers.WebsocketController{}, "get:WsHandler")
 

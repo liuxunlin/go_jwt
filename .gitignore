@@ -9,3 +9,4 @@ bin
 swagger
 mem-64899.memprof
 conf/app.conf
+info.log
